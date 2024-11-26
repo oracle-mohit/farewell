@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farewell Message Generator</title>
+    <style>
+        /* General page styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f7f9;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #2e3a59;
+        }
+
+        /* Welcome section */
+        .welcome-section {
+            background-color: #f8cdda;
+            padding: 50px;
+            text-align: center;
+            border-bottom: 3px solid #ddd;
+        }
+
+        .welcome-section h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #D65B8B;
+        }
+
+        .welcome-section p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #777;
+            margin-top: 15px;
+        }
+
+        /* Form container */
+        .form-container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
+        }
+
+        /* Form field styles */
+        .form-container h2 {
+            text-align: center;
+            font-size: 1.6rem;
+            color: #2e3a59;
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2e3a59;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .form-container input:focus {
+            outline: none;
+            border-color: #D65B8B;
+            box-shadow: 0 0 8px rgba(213, 91, 139, 0.5);
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 14px;
+            background-color: #D65B8B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #e05f92;
+        }
+
+        /* Footer section */
+        .footer {
+            background-color: #2e3a59;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <h1>Farewell Message Generator</h1>
+        <p>Welcome to a unique platform that helps you send personalized farewell messages to your colleagues. Because every goodbye matters.</p>
+        <div class="quote">
+            <p>"A farewell is like a golden thread that ties us to the past and gives us a new beginning."</p>
+            <p>"Leaving is the final step of an incredible journey. Let's make it memorable."</p>
+        </div>
+    </div>
+
+    <!-- User Details Form -->
+    <div class="form-container">
+        <form id="user-details-form">
+            <h2>Enter Your Details</h2>
+
+            <label for="userName">Your Name:</label>
+            <input type="text" id="userName" required placeholder="Enter your full name">
+
+            <label for="userEmail">Your Email:</label>
+            <input type="email" id="userEmail" required placeholder="Enter your email">
+
+            <button type="submit">Create Farewell Messages</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Farewell Message Generator. All Rights Reserved.</p>
+    </div>
+
+    <script>
+        document.getElementById('user-details-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+
+            // POST request to save user details
+            fetch('/user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'User created successfully') {
+                    window.location.href = `/add-colleagues/${data.userId}`; // Redirect to the next page
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

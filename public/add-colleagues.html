@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Colleagues</title>
+    <style>
+        /* General page styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fa;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #2e3a59;
+        }
+
+        /* Header */
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #D65B8B;
+            margin-top: 40px;
+        }
+
+        /* Form container */
+        .colleague-form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #ddd;
+        }
+
+        .colleague-form h2 {
+            font-size: 1.6rem;
+            color: #2e3a59;
+            margin-bottom: 20px;
+        }
+
+        .colleague-form label {
+            font-weight: bold;
+            color: #2e3a59;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .colleague-form input,
+        .colleague-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .colleague-form input:focus,
+        .colleague-form textarea:focus {
+            outline: none;
+            border-color: #D65B8B;
+            box-shadow: 0 0 8px rgba(213, 91, 139, 0.5);
+        }
+
+        .colleague-form button {
+            width: 48%;
+            padding: 12px;
+            background-color: #D65B8B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .colleague-form button:hover {
+            background-color: #e05f92;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        /* Finalize Button */
+        #finalize-button {
+            width: 100%;
+            padding: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #finalize-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Alert Styles */
+        .alert {
+            color: #f44336;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="header-text">Add Farewell Messages</h1>
+
+    <!-- Form Section -->
+    <form id="add-colleague-form">
+        <div class="colleague-form">
+            <h2 id="colleague-header">Colleague 1</h2>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" required placeholder="Enter colleague's name">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required placeholder="Enter colleague's email">
+
+            <label for="message">Farewell Message:</label>
+            <textarea id="message" rows="4" required placeholder="Enter a personalized farewell message"></textarea>
+
+            <label for="code">Unique Code:</label>
+            <input type="text" id="code" required placeholder="Enter a unique code">
+
+            <div class="button-container">
+                <button type="submit">Add more colleagues</button>
+                <button type="button" id="finalize-button">Send Farewell Message to All</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="alert" class="alert"></div>
+
+    <script>
+        const colleagueForm = document.getElementById('add-colleague-form');
+        const finalizeButton = document.getElementById('finalize-button');
+        const colleagueHeader = document.getElementById('colleague-header');
+        let colleagueCount = 1; // Start with the first colleague
+        const maxColleagues = 10;
+        const userId = window.location.pathname.split('/')[2];  // Get userId from URL
+
+        colleagueForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            if (colleagueCount < maxColleagues) {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                const code = document.getElementById('code').value;
+
+                fetch(`/user/${userId}/colleagues`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, message, code })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    colleagueCount++;
+
+                    // Update h2 dynamically with the current colleague count
+                    colleagueHeader.textContent = `Colleague ${colleagueCount}`;
+
+                    // Clear input fields for the next colleague
+                    document.getElementById('name').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('message').value = '';
+                    document.getElementById('code').value = '';
+
+                    // If maximum colleagues are reached, inform the user
+                    if (colleagueCount === maxColleagues) {
+                        document.querySelector('.colleague-form').innerHTML = "<h2>Maximum colleagues reached!</h2>";
+                    }
+                });
+            }
+        });
+
+        // Finalize the list of colleagues
+        finalizeButton.addEventListener('click', function () {
+            if (colleagueCount > 1) {
+                fetch(`/user/${userId}/finalize`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    window.location.href = `/thankyou/`; // Redirect to the next page
+                });
+            } else {
+                document.getElementById('alert').textContent = 'Please add at least one colleague!';
+            }
+        });
+    </script>
+
+</body>
+</html>
