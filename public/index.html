@@ -5,77 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farewell Message Generator</title>
     <style>
-        /* General page styles */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f3f7f9;
+            background-color: #f9f9f9;
             color: #333;
         }
 
-        h1, h2 {
-            color: #2e3a59;
-        }
-
-        /* Welcome section */
-        .welcome-section {
-            background-color: #f8cdda;
-            padding: 50px;
+        header {
+            background-color: #0f4c81;
+            color: white;
+            padding: 20px;
             text-align: center;
-            border-bottom: 3px solid #ddd;
         }
 
-        .welcome-section h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: #D65B8B;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
         }
 
-        .welcome-section p {
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #e6f7ff;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #0f4c81;
+        }
+
+        .hero p {
             font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 30px;
+            margin: 15px 0;
         }
 
-        .quote {
-            font-style: italic;
-            font-size: 1.1rem;
-            color: #777;
-            margin-top: 15px;
+        .key-features, .how-it-works {
+            padding: 40px 20px;
         }
 
-        /* Form container */
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #0f4c81;
+        }
+
+        .features-list, .steps-list {
+            max-width: 800px;
+            margin: 0 auto;
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li, .steps-list li {
+            background-color: #fff9e6;
+            border: 1px solid #ffe7b3;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #333;
+        }
+
         .form-container {
             max-width: 600px;
-            margin: 30px auto;
-            padding: 30px;
+            margin: 40px auto;
+            padding: 20px;
             background-color: white;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
             border: 1px solid #ddd;
         }
 
-        /* Form field styles */
         .form-container h2 {
             text-align: center;
-            font-size: 1.6rem;
-            color: #2e3a59;
-            margin-bottom: 20px;
+            font-size: 1.4rem;
+            color: #0f4c81;
+            margin-bottom: 15px;
         }
 
         .form-container label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: bold;
-            color: #2e3a59;
+            color: #333;
         }
 
         .form-container input {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 10px;
+            margin-bottom: 12px;
             border: 1px solid #ccc;
             border-radius: 8px;
             box-sizing: border-box;
@@ -84,74 +112,122 @@
 
         .form-container input:focus {
             outline: none;
-            border-color: #D65B8B;
-            box-shadow: 0 0 8px rgba(213, 91, 139, 0.5);
+            border-color: #0f4c81;
+            box-shadow: 0 0 8px rgba(15, 76, 129, 0.5);
         }
 
         .form-container button {
             width: 100%;
-            padding: 14px;
-            background-color: #D65B8B;
+            padding: 12px;
+            background-color: #0f4c81;
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: background-color 0.3s ease;
         }
 
         .form-container button:hover {
-            background-color: #e05f92;
+            background-color: #084c61;
         }
 
-        /* Footer section */
+        .faq {
+            background-color: #e6f7ff;
+            padding: 40px 20px;
+        }
+
+        .faq h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #0f4c81;
+            margin-bottom: 20px;
+        }
+
+        .faq-item {
+            max-width: 800px;
+            margin: 10px auto;
+            background-color: #fff9e6;
+            border: 1px solid #ffe7b3;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
         .footer {
-            background-color: #2e3a59;
+            background-color: #0f4c81;
             color: white;
             text-align: center;
-            padding: 20px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
+            padding: 15px;
         }
 
         .footer p {
             margin: 0;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-
-    <!-- Welcome Section -->
-    <div class="welcome-section">
-        <h1>Farewell Message Generator</h1>
-        <p>Welcome to a unique platform that helps you send personalized farewell messages to your colleagues. Because every goodbye matters.</p>
-        <div class="quote">
-            <p>"A farewell is like a golden thread that ties us to the past and gives us a new beginning."</p>
-            <p>"Leaving is the final step of an incredible journey. Let's make it memorable."</p>
+    
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+            <span>Farewell Message Generator</span>
         </div>
-    </div>
+    </header>
 
-    <!-- User Details Form -->
+    <section class="hero">
+        <h1>Create Heartfelt Farewell Messages</h1>
+        <p>Send personalized farewell messages that leave a lasting impression. Let your goodbye be as unique as your journey.</p>
+    </section>
+
+    <section class="key-features">
+        <h2 class="section-title">Key Features</h2>
+        <ul class="features-list">
+            <li>Personal written messages with no AI involved</li>
+            <li>1-1 sharing with each colleague</li>
+            <li>Automated delivery of messages to create a memorable event</li>
+        </ul>
+    </section>
+
+    <section class="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <ul class="steps-list">
+            <li>Enter your name and work email (details are completely safe).</li>
+            <li>Write your message and set a unique code for each colleague.</li>
+            <li>Your colleague receives an email with the unique code, ensuring only they can view their message.</li>
+        </ul>
+    </section>
+
     <div class="form-container">
         <form id="user-details-form">
             <h2>Enter Your Details</h2>
-
             <label for="userName">Your Name:</label>
             <input type="text" id="userName" required placeholder="Enter your full name">
-
             <label for="userEmail">Your Email:</label>
             <input type="email" id="userEmail" required placeholder="Enter your email">
-
             <button type="submit">Create Farewell Messages</button>
         </form>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>&copy; 2024 Farewell Message Generator. All Rights Reserved.</p>
-    </div>
+    <section class="faq">
+        <h3>Frequently Asked Questions</h3>
+        <div class="faq-item">
+            <p><strong>Q: Are my details safe?</strong></p>
+            <p>A: Yes, your details are encrypted and not shared with anyone.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Q: Can I edit messages after sending?</strong></p>
+            <p>A: Yes, you can edit messages before they are delivered.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Q: Can colleagues see each other's messages?</strong></p>
+            <p>A: No, each message is uniquely coded and accessible only by the intended recipient.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2025 Farewell Message Generator. All Rights Reserved.</p>
+    </footer>
 
     <script>
         document.getElementById('user-details-form').addEventListener('submit', function (event) {
@@ -160,7 +236,6 @@
             const name = document.getElementById('userName').value;
             const email = document.getElementById('userEmail').value;
 
-            // POST request to save user details
             fetch('/user', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -169,11 +244,10 @@
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'User created successfully') {
-                    window.location.href = `/add-colleagues/${data.userId}`; // Redirect to the next page
+                    window.location.href = `/add-colleagues/${data.userId}`;
                 }
             });
         });
     </script>
-
 </body>
 </html>
